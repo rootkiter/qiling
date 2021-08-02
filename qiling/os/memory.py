@@ -248,7 +248,7 @@ class QlMemoryManager:
 
         return self.ql.uc.mem_read(addr, size)
 
-    def read_ptr(self, addr: int, size: int=None) -> int:
+    def read_uint(self, addr: int, size: int=None) -> int:
         """Read an integer value from a memory address.
 
         Args:
@@ -272,6 +272,17 @@ class QlMemoryManager:
             return __unpack(self.read(addr, size))
 
         raise QlErrorStructConversion(f"Unsupported pointer size: {size}")
+
+    def read_ptr(self, addr: int, size: int=None) -> int:
+        """Read an pointer value from a memory address.
+
+        Args:
+            addr: memory address to read
+            size: pointer size (in bytes): either 1, 2, 4, 8, or None for arch native size
+
+        Returns: pointer value stored at the specified memory address
+        """
+        return self.read_uint(addr, size)
 
     def write(self, addr: int, data: bytes) -> None:
         """Write bytes to a memory.
