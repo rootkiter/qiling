@@ -440,6 +440,9 @@ class QlOsPosix(QlOs):
     def set_syscall_return(self, retval: int):
         self.__syscall_cc.setReturnValue(retval)
 
+    def get_params(self, argmax):
+        return [ self.__syscall_cc.getRawParam(idx) for idx in range(0, argmax) ]
+
     @property
     def fd(self):
         return self._fd
